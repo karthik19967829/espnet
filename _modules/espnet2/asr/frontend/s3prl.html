@@ -230,9 +230,6 @@
             <span class="n">source</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">,</span>
         <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
         
-        <span class="c1">#adding adapters </span>
-        
-        
         
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span>
             <span class="n">s3prl_upstream</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="kc">None</span>
@@ -242,16 +239,21 @@
         <span class="p">]:</span>
             <span class="n">s3prl_upstream</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">layerdrop</span> <span class="o">=</span> <span class="mf">0.0</span>
             
-            <span class="c1">#check if adapter is configured </span>
-        <span class="n">s3prl_upstream</span> <span class="o">=</span> <span class="n">add_adapters_wav2vec2</span><span class="p">(</span><span class="n">s3prl_upstream</span><span class="p">,</span><span class="n">adapter_down_dim</span><span class="o">=</span><span class="mi">192</span><span class="p">,</span> <span class="n">adapt_layers</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            
+            <span class="c1">#check if adapter is added</span>
+            <span class="k">if</span> <span class="n">s3prl_upstream</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;Wav2Vec2Model&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">add_adapters</span><span class="p">:</span>
+                <span class="n">s3prl_upstream</span> <span class="o">=</span> <span class="n">add_adapters_wav2vec2</span><span class="p">(</span><span class="n">s3prl_upstream</span><span class="p">,</span><span class="n">adapter_down_dim</span><span class="o">=</span><span class="mi">192</span><span class="p">,</span> <span class="n">adapt_layers</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 
         <span class="kn">from</span> <span class="nn">s3prl.upstream.interfaces</span> <span class="kn">import</span> <span class="n">Featurizer</span>
 
-        <span class="sd">&#39;&#39;&#39;if self.multilayer_feature:</span>
-<span class="sd">            feature_selection = &quot;hidden_states&quot;</span>
-<span class="sd">        else:&#39;&#39;&#39;</span>
-        <span class="n">feature_selection</span> <span class="o">=</span> <span class="s2">&quot;last_hidden_state&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multilayer_feature</span><span class="p">:</span>
+            <span class="n">feature_selection</span> <span class="o">=</span> <span class="s2">&quot;hidden_states&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feature_selection</span> <span class="o">=</span> <span class="s2">&quot;last_hidden_state&quot;</span>
+        
+        <span class="c1">#check if adapters are added and over-ride the feature selection  </span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">add_adapters</span><span class="p">:</span>
+            <span class="n">feature_selection</span> <span class="o">=</span> <span class="s2">&quot;last_hidden_state&quot;</span>
+            
         <span class="n">s3prl_featurizer</span> <span class="o">=</span> <span class="n">Featurizer</span><span class="p">(</span>
             <span class="n">upstream</span><span class="o">=</span><span class="n">s3prl_upstream</span><span class="p">,</span>
             <span class="n">feature_selection</span><span class="o">=</span><span class="n">feature_selection</span><span class="p">,</span>
