@@ -176,7 +176,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">down_projection</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">orig_dim</span><span class="p">,</span> <span class="n">down_dim</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">up_projection</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">down_dim</span><span class="p">,</span> <span class="n">orig_dim</span><span class="p">)</span>
-
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_uniform_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">down_projection</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_uniform_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">up_projection</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_activation_fn</span><span class="p">(</span><span class="n">activation_fn</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_norm_opt</span> <span class="o">=</span> <span class="n">layer_norm</span>

@@ -180,7 +180,7 @@
     <span class="p">):</span>
         <span class="k">assert</span> <span class="n">check_argument_types</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="n">eprojs</span> <span class="o">=</span> <span class="n">encoder_output_size</span>
+        <span class="n">eprojs</span> <span class="o">=</span> <span class="mi">1024</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropout_rate</span> <span class="o">=</span> <span class="n">dropout_rate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ctc_lo</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">eprojs</span><span class="p">,</span> <span class="n">odim</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ctc_type</span> <span class="o">=</span> <span class="n">ctc_type</span>
