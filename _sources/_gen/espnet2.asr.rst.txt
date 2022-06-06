@@ -488,17 +488,6 @@ espnet2.asr.frontend.adapter_utils.add_adapters
     :show-inheritance:
 
 
-.. _espnet2.asr.frontend.adapter_utils.adapters.__init__:
-
-espnet2.asr.frontend.adapter_utils.adapters.__init__
-----------------------------------------------------
-
-.. automodule:: espnet2.asr.frontend.adapter_utils.adapters.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 .. _espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer:
 
 espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer
