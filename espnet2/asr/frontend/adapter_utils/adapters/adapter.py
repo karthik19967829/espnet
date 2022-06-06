@@ -9,7 +9,7 @@ try:
     is_fairseq_available = True
 except ImportError:
     is_fairseq_available = False
-    
+
 
 class Adapter(nn.Module):
     def __init__(

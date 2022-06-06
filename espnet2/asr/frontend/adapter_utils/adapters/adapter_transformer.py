@@ -3,17 +3,18 @@ import torch.nn as nn
 
 try:
     from fairseq.models.wav2vec.wav2vec2 import TransformerSentenceEncoderLayer
+
     is_fairseq_available = True
 except ImportError:
     is_fairseq_available = False
 
 if not is_fairseq_available:
-            raise ImportError(
-                "`fairseq` is not available. Please install it via `pip install"
-                " fairseq` or `cd /path/to/espnet/tools && . ./activate_python.sh"
-                " && ./installers/install_fairseq.sh`."
-            )
-    
+    raise ImportError(
+        "`fairseq` is not available. Please install it via `pip install"
+        " fairseq` or `cd /path/to/espnet/tools && . ./activate_python.sh"
+        " && ./installers/install_fairseq.sh`."
+    )
+
 from espnet2.asr.frontend.adapter_utils.adapters.adapter import Adapter
 
 
