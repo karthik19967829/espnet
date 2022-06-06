@@ -152,7 +152,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#espnet2-asr-frontend-windowing">espnet2.asr.frontend.windowing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#espnet2-asr-frontend-fused">espnet2.asr.frontend.fused</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#espnet2-asr-frontend-default">espnet2.asr.frontend.default</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#espnet2-asr-frontend-adapter-utils-example">espnet2.asr.frontend.adapter_utils.example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#espnet2-asr-frontend-adapter-utils-add-adapters">espnet2.asr.frontend.adapter_utils.add_adapters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#espnet2-asr-frontend-adapter-utils-adapters-adapter-transformer">espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#espnet2-asr-frontend-adapter-utils-adapters-adapter">espnet2.asr.frontend.adapter_utils.adapters.adapter</a></li>
@@ -2507,11 +2506,8 @@ registered hooks while the latter silently ignores them.</p>
 </dd></dl>
 
 </section>
-<section id="espnet2-asr-frontend-adapter-utils-example">
-<span id="id43"></span><h2>espnet2.asr.frontend.adapter_utils.example<a class="headerlink" href="#espnet2-asr-frontend-adapter-utils-example" title="Permalink to this headline">¶</a></h2>
-</section>
 <section id="espnet2-asr-frontend-adapter-utils-add-adapters">
-<span id="id44"></span><h2>espnet2.asr.frontend.adapter_utils.add_adapters<a class="headerlink" href="#espnet2-asr-frontend-adapter-utils-add-adapters" title="Permalink to this headline">¶</a></h2>
+<span id="id43"></span><h2>espnet2.asr.frontend.adapter_utils.add_adapters<a class="headerlink" href="#espnet2-asr-frontend-adapter-utils-add-adapters" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-espnet2.asr.frontend.adapter_utils.add_adapters"></span><dl class="function">
 <dt id="espnet2.asr.frontend.adapter_utils.add_adapters.add_adapters_wav2vec2">
 <code class="sig-prename descclassname">espnet2.asr.frontend.adapter_utils.add_adapters.</code><code class="sig-name descname">add_adapters_wav2vec2</code><span class="sig-paren">(</span><em class="sig-param">wav2vec2_model</em>, <em class="sig-param">adapter_down_dim</em>, <em class="sig-param">adapt_layers=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/espnet2/asr/frontend/adapter_utils/add_adapters.html#add_adapters_wav2vec2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#espnet2.asr.frontend.adapter_utils.add_adapters.add_adapters_wav2vec2" title="Permalink to this definition">¶</a></dt>
@@ -2527,7 +2523,7 @@ registered hooks while the latter silently ignores them.</p>
 
 </section>
 <section id="espnet2-asr-frontend-adapter-utils-adapters-adapter-transformer">
-<span id="id45"></span><h2>espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer<a class="headerlink" href="#espnet2-asr-frontend-adapter-utils-adapters-adapter-transformer" title="Permalink to this headline">¶</a></h2>
+<span id="id44"></span><h2>espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer<a class="headerlink" href="#espnet2-asr-frontend-adapter-utils-adapters-adapter-transformer" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer"></span><dl class="class">
 <dt id="espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer.AdapterTransformerSentenceEncoderLayer">
 <em class="property">class </em><code class="sig-prename descclassname">espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer.</code><code class="sig-name descname">AdapterTransformerSentenceEncoderLayer</code><span class="sig-paren">(</span><em class="sig-param">embedding_dim: float = 768</em>, <em class="sig-param">ffn_embedding_dim: float = 3072</em>, <em class="sig-param">num_attention_heads: int = 8</em>, <em class="sig-param">dropout: float = 0.1</em>, <em class="sig-param">attention_dropout: float = 0.1</em>, <em class="sig-param">activation_dropout: float = 0.1</em>, <em class="sig-param">activation_fn: str = 'relu'</em>, <em class="sig-param">layer_norm_first: bool = False</em>, <em class="sig-param">adapter_down_dim: int = 192</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/espnet2/asr/frontend/adapter_utils/adapters/adapter_transformer.html#AdapterTransformerSentenceEncoderLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer.AdapterTransformerSentenceEncoderLayer" title="Permalink to this definition">¶</a></dt>
@@ -2544,7 +2540,7 @@ modules similar to the original Transformer imlementation.</p>
 
 </section>
 <section id="espnet2-asr-frontend-adapter-utils-adapters-adapter">
-<span id="id46"></span><h2>espnet2.asr.frontend.adapter_utils.adapters.adapter<a class="headerlink" href="#espnet2-asr-frontend-adapter-utils-adapters-adapter" title="Permalink to this headline">¶</a></h2>
+<span id="id45"></span><h2>espnet2.asr.frontend.adapter_utils.adapters.adapter<a class="headerlink" href="#espnet2-asr-frontend-adapter-utils-adapters-adapter" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-espnet2.asr.frontend.adapter_utils.adapters.adapter"></span><dl class="class">
 <dt id="espnet2.asr.frontend.adapter_utils.adapters.adapter.Adapter">
 <em class="property">class </em><code class="sig-prename descclassname">espnet2.asr.frontend.adapter_utils.adapters.adapter.</code><code class="sig-name descname">Adapter</code><span class="sig-paren">(</span><em class="sig-param">orig_dim: int</em>, <em class="sig-param">down_dim: int</em>, <em class="sig-param">layer_norm: str = None</em>, <em class="sig-param">activation_fn: str = 'gelu'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/espnet2/asr/frontend/adapter_utils/adapters/adapter.html#Adapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#espnet2.asr.frontend.adapter_utils.adapters.adapter.Adapter" title="Permalink to this definition">¶</a></dt>

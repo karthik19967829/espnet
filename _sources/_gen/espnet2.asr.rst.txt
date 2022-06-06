@@ -466,17 +466,6 @@ espnet2.asr.frontend.default
     :show-inheritance:
 
 
-.. _espnet2.asr.frontend.adapter_utils.example:
-
-espnet2.asr.frontend.adapter_utils.example
-------------------------------------------
-
-.. automodule:: espnet2.asr.frontend.adapter_utils.example
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 .. _espnet2.asr.frontend.adapter_utils.add_adapters:
 
 espnet2.asr.frontend.adapter_utils.add_adapters
