@@ -90,10 +90,10 @@ class S3prlFrontend(AbsFrontend):
             # check if adapter is added
             if (
                 s3prl_upstream.model.__class__.__name__ == "Wav2Vec2Model"
-                and self.args.add_adapters
+                and self.args.adapter_config
             ):
                 s3prl_upstream = add_adapters_wav2vec2(
-                    s3prl_upstream, adapter_down_dim=192, adapt_layers=[0, 1, 2]
+                    s3prl_upstream, adapter_down_dim= self.args.adapter_config.adapter_down_dim, adapt_layers= eval(self.args.adapter_config.adapt_layers)
                 )
 
         from s3prl.upstream.interfaces import Featurizer
