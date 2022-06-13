@@ -257,7 +257,7 @@
             <span class="n">feature_selection</span> <span class="o">=</span> <span class="s2">&quot;last_hidden_state&quot;</span>
 
         <span class="c1"># check if adapters are added and over-ride the feature selection</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">add_adapters</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">adapter_config</span><span class="p">:</span>
             <span class="n">feature_selection</span> <span class="o">=</span> <span class="s2">&quot;last_hidden_state&quot;</span>
 
         <span class="n">s3prl_featurizer</span> <span class="o">=</span> <span class="n">Featurizer</span><span class="p">(</span>
