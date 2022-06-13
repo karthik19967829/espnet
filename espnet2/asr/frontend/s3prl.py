@@ -104,7 +104,7 @@ class S3prlFrontend(AbsFrontend):
             feature_selection = "last_hidden_state"
 
         # check if adapters are added and over-ride the feature selection
-        if self.args.add_adapters:
+        if self.args.adapter_config:
             feature_selection = "last_hidden_state"
 
         s3prl_featurizer = Featurizer(
