@@ -20,11 +20,10 @@ def add_adapters_wav2vec2(wav2vec2_model, adapter_down_dim, adapt_layers=None):
     for param in wav2vec2_model.parameters():
         param.requires_grad = False
 
-    adapted_layers = []
+    
     for layer_idx, layer in enumerate(wav2vec2_model.model.encoder.layers):
         if adapt_layers is not None and layer_idx not in adapt_layers:
             continue
-        adapted_layers.append(layer_idx)
 
         # extract arguments from original layer
         embedding_dim = layer.embedding_dim
@@ -67,9 +66,6 @@ def add_adapters_wav2vec2(wav2vec2_model, adapter_down_dim, adapt_layers=None):
     new_param_num = count_params(wav2vec2_model)
     new_trainable_param_num = count_params(wav2vec2_model, only_trainable=True)
 
-    print(
-        f'>> inserted adapters to the following layers: {", ".join(map(str, adapted_layers))}'
-    )
     print(f"  * original model weights: {orig_param_num:,}")
     print(f"  * new model weights - all: {new_param_num:,}")
     print(
