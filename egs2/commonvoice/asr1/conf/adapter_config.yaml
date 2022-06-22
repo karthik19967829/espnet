@@ -1,0 +1,34 @@
+optim: adam
+optim_conf:
+  lr: 0.00027
+scheduler: warmuplr   # pytorch v1.1.0+ required #Tune warmup steps
+scheduler_conf:
+  warmup_steps: 40000
+max_epoch: 18
+
+
+frontend_conf:
+ n_fft: 512
+ hop_length: 256
+
+frontend: s3prl
+frontend_conf:
+  frontend_conf:
+    upstream: wav2vec2_large_ll60k # Note: If the upstream is changed, please change the input_size in the preencoder.
+    adapter_config:
+      adapter_down_dim: 192
+      adapt_layers: '[0, 1, 2]'
+      
+  download_dir: ./hub
+  multilayer_feature: False
+
+
+model_conf:
+  ctc_weight: 1.0
+  lsm_weight: 0.3
+  length_normalized_loss: false
+  extract_feats_in_collect_stats: true # Note: "False" means during collect stats (stage 10), generating dummy stats files rather than extract_feats by forward frontend.
+
+init: xavier_uniform
+    
+batch_size: 10
