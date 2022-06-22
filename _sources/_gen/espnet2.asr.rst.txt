@@ -312,39 +312,6 @@ espnet2.asr.frontend.windowing
     :show-inheritance:
 
 
-.. _espnet2.asr.frontend.adapter_utils.add_adapters:
-
-espnet2.asr.frontend.adapter_utils.add_adapters
------------------------------------------------
-
-.. automodule:: espnet2.asr.frontend.adapter_utils.add_adapters
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-.. _espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer:
-
-espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer
----------------------------------------------------------------
-
-.. automodule:: espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-.. _espnet2.asr.frontend.adapter_utils.adapters.adapter:
-
-espnet2.asr.frontend.adapter_utils.adapters.adapter
----------------------------------------------------
-
-.. automodule:: espnet2.asr.frontend.adapter_utils.adapters.adapter
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 .. _espnet2.asr.postencoder.abs_postencoder:
 
 espnet2.asr.postencoder.abs_postencoder
