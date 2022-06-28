@@ -100,7 +100,7 @@ We provide the results for the commonvoice **Welsh** dataset with adapters inser
 
 
 
-## How to use fusion of front-ends : 
+# How to use fusion of front-ends : 
 
 We provide in this recipe a example configuration file using several front-ends and a linear fusion to combine them. 
 The configuration file is [here](https://github.com/DanBerrebbi/espnet/blob/master/egs2/commonvoice/asr1/conf/tuning/train_asr_fused_frontends.yaml#L22-L50), we highlighted the lines defning the front-end fusion. 
