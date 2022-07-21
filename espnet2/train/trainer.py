@@ -139,7 +139,7 @@ class Trainer:
         ngpu: int = 0,
     ):
 
-        is_adapters = exists("base_model.pth")
+        is_adapters = exists(checkpoint / "base_model.pth")
 
         if is_adapters == True:
             states = torch.load(
@@ -377,9 +377,11 @@ class Trainer:
                 new_dict = dict()
                 adapters_inserted = False
                 for name in model.state_dict():
-                    if "adapter" in str(name) or ("frontend" not in str(name)):
-                        if "adapters" in str(name):
-                            adapters_inserted = True
+                    # print(name)
+                    if "adapter" in str(name):
+                        adapters_inserted = True
+                        new_dict[name] = model.state_dict()[name]
+                    elif "frontend" not in str(name):
                         new_dict[name] = model.state_dict()[name]
 
                 if adapters_inserted == False:
