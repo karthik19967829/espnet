@@ -160,7 +160,6 @@ class Trainer:
 
             adapters_param = states["model"]
             for name in adapters_param:
-                print(name)
                 base_model[name] = adapters_param[name]
 
             model.load_state_dict(base_model)
