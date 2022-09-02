@@ -85,3 +85,8 @@ def count_params(model, only_trainable=False):
         else:
             n_params += n
     return n_params
+
+
+def add_adapters(upstream_model,adapter_down_dim,adapt_layers):
+    if s3prl_upstream.model.__class__.__name__ == "Wav2Vec2Model":
+        return add_adapters_wav2vec2(upstream_model, adapter_down_dim, adapt_layers)

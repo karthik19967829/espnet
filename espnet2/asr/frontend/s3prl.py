@@ -88,11 +88,8 @@ class S3prlFrontend(AbsFrontend):
             s3prl_upstream.model.encoder.layerdrop = 0.0
 
             # check if adapter is added
-            if (
-                s3prl_upstream.model.__class__.__name__ == "Wav2Vec2Model"
-                and self.args.adapter_config
-            ):
-                s3prl_upstream = add_adapters_wav2vec2(
+            if self.args.adapter_config:
+                s3prl_upstream = add_adapters(
                     s3prl_upstream, adapter_down_dim= self.args.adapter_config.adapter_down_dim, adapt_layers= eval(self.args.adapter_config.adapt_layers)
                 )
 
@@ -101,10 +98,6 @@ class S3prlFrontend(AbsFrontend):
         if self.multilayer_feature:
             feature_selection = "hidden_states"
         else:
-            feature_selection = "last_hidden_state"
-
-        # check if adapters are added and over-ride the feature selection
-        if self.args.adapter_config:
             feature_selection = "last_hidden_state"
 
         s3prl_featurizer = Featurizer(
