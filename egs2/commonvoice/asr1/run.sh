@@ -11,7 +11,7 @@ train_set=train_"$(echo "${lang}" | tr - _)"
 train_dev=dev_"$(echo "${lang}" | tr - _)"
 test_set="${train_dev} test_$(echo ${lang} | tr - _)"
 
-asr_config=experiments/exp1.yaml
+asr_config=experiments/adapter_finder.yaml
 inference_config=conf/decode_asr.yaml
 
 if [[ "zh" == *"${lang}"* ]]; then
