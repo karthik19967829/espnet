@@ -14,7 +14,7 @@ from espnet.nets.pytorch_backend.frontends.frontend import Frontend
 from espnet.nets.pytorch_backend.nets_utils import pad_list
 from espnet2.asr.frontend.abs_frontend import AbsFrontend
 from espnet2.utils.get_default_kwargs import get_default_kwargs
-from espnet2.asr.frontend.adapter_utils.add_adapters import add_adapters_wav2vec2
+from espnet2.asr.frontend.adapter_utils.add_adapters import add_adapters
 
 # from torchsummary import summary
 
