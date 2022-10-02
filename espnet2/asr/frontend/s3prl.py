@@ -88,7 +88,7 @@ class S3prlFrontend(AbsFrontend):
             s3prl_upstream.model.encoder.layerdrop = 0.0
 
             # check if adapter is added
-            if self.args.adapter_config:
+            if self.args.add_adapters:
                 s3prl_upstream = add_adapters(
                     s3prl_upstream, adapter_down_dim= self.args.adapter_config.adapter_down_dim, adapt_layers= eval(self.args.adapter_config.adapt_layers)
                 )
