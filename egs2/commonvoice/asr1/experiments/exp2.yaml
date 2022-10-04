@@ -42,7 +42,7 @@ frontend_conf:
   download_dir: ./hub
   multilayer_feature: True
 
-freeze_param: []
+freeze_param: ["encoder","decoder","ctc"]
 
 model_conf:
   ctc_weight: 1.0
