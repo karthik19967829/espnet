@@ -767,6 +767,10 @@ class Trainer:
                     reporter.tensorboard_add_scalar(summary_writer, -log_interval)
                 if use_wandb:
                     reporter.wandb_log()
+                print("the weights of the frontend layers are:")
+                print(".........")
+                print(model.frontend.featurizer.weights)
+                print(".........")    
 
         else:
             if distributed:
