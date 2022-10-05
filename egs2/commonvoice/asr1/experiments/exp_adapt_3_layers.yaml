@@ -38,11 +38,11 @@ frontend_conf:
     add_adapters: True
     adapter_config:
       adapter_down_dim: 192
-      adapt_layers: '[6, 21, 22]'
+      adapt_layers: '[0,1,2]'
   download_dir: ./hub
-  multilayer_feature: False
+  multilayer_feature: True 
 
-freeze_param: []
+freeze_param: ["encoder","decoder","ctc"]
 
 model_conf:
   ctc_weight: 1.0
