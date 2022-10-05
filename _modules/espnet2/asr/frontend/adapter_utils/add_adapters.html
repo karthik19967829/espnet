@@ -250,7 +250,9 @@
 
 <div class="viewcode-block" id="add_adapters"><a class="viewcode-back" href="../../../../../_gen/espnet2.asr.html#espnet2.asr.frontend.adapter_utils.add_adapters.add_adapters">[docs]</a><span class="k">def</span> <span class="nf">add_adapters</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">,</span><span class="n">adapter_down_dim</span><span class="p">,</span><span class="n">adapt_layers</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">s3prl_upstream_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;Wav2Vec2Model&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">add_adapters_wav2vec2</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">,</span> <span class="n">adapter_down_dim</span><span class="p">,</span> <span class="n">adapt_layers</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">add_adapters_wav2vec2</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">,</span> <span class="n">adapter_down_dim</span><span class="p">,</span> <span class="n">adapt_layers</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;selected upstream did not match any available adapter upstream models , returning upstream&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s3prl_upstream_model</span>  </div>
 </pre></div>
 
            </div>
