@@ -13,7 +13,7 @@ def add_adapters_wav2vec2(wav2vec2_model, adapter_down_dim, adapt_layers=None):
     """
     if adapt_layers == []:
         print(">> adapt_layers is an empy list. No adapters will be inserted.")
-        return
+        return wav2vec2_model
     orig_param_num = count_params(wav2vec2_model)
 
     # freeze all layers
