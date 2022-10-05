@@ -90,3 +90,5 @@ def count_params(model, only_trainable=False):
 def add_adapters(s3prl_upstream_model,adapter_down_dim,adapt_layers):
     if s3prl_upstream_model.model.__class__.__name__ == "Wav2Vec2Model":
         return add_adapters_wav2vec2(s3prl_upstream_model, adapter_down_dim, adapt_layers)
+    print("selected upstream did not match any available adapter upstream models , returning upstream")
+    return s3prl_upstream_model  
