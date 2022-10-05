@@ -174,7 +174,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">adapt_layers</span> <span class="o">==</span> <span class="p">[]:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt; adapt_layers is an empy list. No adapters will be inserted.&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span> <span class="n">wav2vec2_model</span>
     <span class="n">orig_param_num</span> <span class="o">=</span> <span class="n">count_params</span><span class="p">(</span><span class="n">wav2vec2_model</span><span class="p">)</span>
 
     <span class="c1"># freeze all layers</span>
