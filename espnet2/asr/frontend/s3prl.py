@@ -88,10 +88,10 @@ class S3prlFrontend(AbsFrontend):
             s3prl_upstream.model.encoder.layerdrop = 0.0
 
             # check if adapter is added
-            #self.args.adapter_config.adapter_down_dim
+            
             if self.args.add_adapters:
                 s3prl_upstream = add_adapters(
-                    s3prl_upstream, adapter_down_dim=192 , adapt_layers= eval(self.args.adapter_config.adapt_layers)
+                    s3prl_upstream, adapter_down_dim=self.args.adapter_config["adapter_down_dim"] , adapt_layers= eval(self.args.adapter_config["adapt_layers"])
                 )
 
         from s3prl.upstream.interfaces import Featurizer
