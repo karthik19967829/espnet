@@ -5,7 +5,7 @@ from espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer import (
 )
 
 
-def add_adapters_wav2vec2(wav2vec2_model, adapter_down_dim, adapt_layers=None):
+def add_adapters(s3prl_upstream_model, adapter_down_dim, adapt_layers=None):
     """
     add adapters to wav2vec2 model.
     * adapter_down_dim - down-projection dimension of adapter.
@@ -13,15 +13,15 @@ def add_adapters_wav2vec2(wav2vec2_model, adapter_down_dim, adapt_layers=None):
     """
     if adapt_layers == []:
         print(">> adapt_layers is an empy list. No adapters will be inserted.")
-        return wav2vec2_model
-    orig_param_num = count_params(wav2vec2_model)
+        return s3prl_upstream_model
+    orig_param_num = count_params(s3prl_upstream_model)
 
     # freeze all layers
-    for param in wav2vec2_model.parameters():
+    for param in s3prl_upstream_model.parameters():
         param.requires_grad = False
 
     
-    for layer_idx, layer in enumerate(wav2vec2_model.model.encoder.layers):
+    for layer_idx, layer in enumerate(s3prl_upstream_model.model.encoder.layers):
         if adapt_layers is not None and layer_idx not in adapt_layers:
             continue
 
@@ -60,11 +60,11 @@ def add_adapters_wav2vec2(wav2vec2_model, adapter_down_dim, adapt_layers=None):
         adapter_added_layer.load_state_dict(orig_state_dict, strict=False)
 
         # overwrite original layer with adapter-added layer
-        wav2vec2_model.model.encoder.layers[layer_idx] = adapter_added_layer
+        s3prl_upstream_model.model.encoder.layers[layer_idx] = adapter_added_layer
 
     # print resulting model stats
-    new_param_num = count_params(wav2vec2_model)
-    new_trainable_param_num = count_params(wav2vec2_model, only_trainable=True)
+    new_param_num = count_params(s3prl_upstream_model)
+    new_trainable_param_num = count_params(s3prl_upstream_model, only_trainable=True)
 
     print(f"  * original model weights: {orig_param_num:,}")
     print(f"  * new model weights - all: {new_param_num:,}")
@@ -72,7 +72,7 @@ def add_adapters_wav2vec2(wav2vec2_model, adapter_down_dim, adapt_layers=None):
         f"  * new model weights - trainable: {new_trainable_param_num:,} ({100. * new_trainable_param_num / orig_param_num : .2f}% of original model)"
     )
 
-    return wav2vec2_model
+    return s3prl_upstream_model
 
 
 def count_params(model, only_trainable=False):
@@ -85,10 +85,3 @@ def count_params(model, only_trainable=False):
         else:
             n_params += n
     return n_params
-
-
-def add_adapters(s3prl_upstream_model,adapter_down_dim,adapt_layers):
-    if s3prl_upstream_model.model.__class__.__name__ == "Wav2Vec2Model":
-        return add_adapters_wav2vec2(s3prl_upstream_model, adapter_down_dim, adapt_layers)
-    print("selected upstream did not match any available adapter upstream models , returning upstream")
-    return s3prl_upstream_model  
