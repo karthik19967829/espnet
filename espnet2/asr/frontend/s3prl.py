@@ -81,13 +81,8 @@ class S3prlFrontend(AbsFrontend):
 
         if getattr(
             s3prl_upstream, "model", None
-        ) is not None and s3prl_upstream.model.__class__.__name__ in [
-            "Wav2Vec2Model",
-            "HubertModel",
-        ]:
+        ) is not None
             s3prl_upstream.model.encoder.layerdrop = 0.0
-
-            # check if adapter is added
             
             if self.args.add_adapters:
                 s3prl_upstream = add_adapters(
