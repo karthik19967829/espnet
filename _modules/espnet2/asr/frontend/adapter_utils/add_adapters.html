@@ -171,7 +171,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="add_adapters_wav2vec2"><a class="viewcode-back" href="../../../../../_gen/espnet2.asr.html#espnet2.asr.frontend.adapter_utils.add_adapters.add_adapters_wav2vec2">[docs]</a><span class="k">def</span> <span class="nf">add_adapters_wav2vec2</span><span class="p">(</span><span class="n">wav2vec2_model</span><span class="p">,</span> <span class="n">adapter_down_dim</span><span class="p">,</span> <span class="n">adapt_layers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="add_adapters"><a class="viewcode-back" href="../../../../../_gen/espnet2.asr.html#espnet2.asr.frontend.adapter_utils.add_adapters.add_adapters">[docs]</a><span class="k">def</span> <span class="nf">add_adapters</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">,</span> <span class="n">adapter_down_dim</span><span class="p">,</span> <span class="n">adapt_layers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    add adapters to wav2vec2 model.</span>
 <span class="sd">    * adapter_down_dim - down-projection dimension of adapter.</span>
@@ -179,15 +179,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">adapt_layers</span> <span class="o">==</span> <span class="p">[]:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt; adapt_layers is an empy list. No adapters will be inserted.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">wav2vec2_model</span>
-    <span class="n">orig_param_num</span> <span class="o">=</span> <span class="n">count_params</span><span class="p">(</span><span class="n">wav2vec2_model</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s3prl_upstream_model</span>
+    <span class="n">orig_param_num</span> <span class="o">=</span> <span class="n">count_params</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">)</span>
 
     <span class="c1"># freeze all layers</span>
-    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">wav2vec2_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">s3prl_upstream_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
         <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">False</span>
 
     
-    <span class="k">for</span> <span class="n">layer_idx</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">wav2vec2_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">layers</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">layer_idx</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">layers</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">adapt_layers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">layer_idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">adapt_layers</span><span class="p">:</span>
             <span class="k">continue</span>
 
@@ -226,11 +226,11 @@
         <span class="n">adapter_added_layer</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">orig_state_dict</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># overwrite original layer with adapter-added layer</span>
-        <span class="n">wav2vec2_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">layer_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">adapter_added_layer</span>
+        <span class="n">s3prl_upstream_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">layer_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">adapter_added_layer</span>
 
     <span class="c1"># print resulting model stats</span>
-    <span class="n">new_param_num</span> <span class="o">=</span> <span class="n">count_params</span><span class="p">(</span><span class="n">wav2vec2_model</span><span class="p">)</span>
-    <span class="n">new_trainable_param_num</span> <span class="o">=</span> <span class="n">count_params</span><span class="p">(</span><span class="n">wav2vec2_model</span><span class="p">,</span> <span class="n">only_trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">new_param_num</span> <span class="o">=</span> <span class="n">count_params</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">)</span>
+    <span class="n">new_trainable_param_num</span> <span class="o">=</span> <span class="n">count_params</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">,</span> <span class="n">only_trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  * original model weights: </span><span class="si">{</span><span class="n">orig_param_num</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  * new model weights - all: </span><span class="si">{</span><span class="n">new_param_num</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -238,7 +238,7 @@
         <span class="sa">f</span><span class="s2">&quot;  * new model weights - trainable: </span><span class="si">{</span><span class="n">new_trainable_param_num</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="mf">100.</span> <span class="o">*</span> <span class="n">new_trainable_param_num</span> <span class="o">/</span> <span class="n">orig_param_num</span> <span class="si">:</span><span class="s2"> .2f</span><span class="si">}</span><span class="s2">% of original model)&quot;</span>
     <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">wav2vec2_model</span></div>
+    <span class="k">return</span> <span class="n">s3prl_upstream_model</span></div>
 
 
 <div class="viewcode-block" id="count_params"><a class="viewcode-back" href="../../../../../_gen/espnet2.asr.html#espnet2.asr.frontend.adapter_utils.add_adapters.count_params">[docs]</a><span class="k">def</span> <span class="nf">count_params</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">only_trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -251,13 +251,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">n_params</span> <span class="o">+=</span> <span class="n">n</span>
     <span class="k">return</span> <span class="n">n_params</span></div>
-
-
-<div class="viewcode-block" id="add_adapters"><a class="viewcode-back" href="../../../../../_gen/espnet2.asr.html#espnet2.asr.frontend.adapter_utils.add_adapters.add_adapters">[docs]</a><span class="k">def</span> <span class="nf">add_adapters</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">,</span><span class="n">adapter_down_dim</span><span class="p">,</span><span class="n">adapt_layers</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">s3prl_upstream_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;Wav2Vec2Model&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">add_adapters_wav2vec2</span><span class="p">(</span><span class="n">s3prl_upstream_model</span><span class="p">,</span> <span class="n">adapter_down_dim</span><span class="p">,</span> <span class="n">adapt_layers</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;selected upstream did not match any available adapter upstream models , returning upstream&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">s3prl_upstream_model</span>  </div>
 </pre></div>
 
            </div>
