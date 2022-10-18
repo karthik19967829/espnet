@@ -1,53 +1,45 @@
 """Trainer module."""
 import argparse
-from contextlib import contextmanager
 import dataclasses
-from dataclasses import is_dataclass
-from distutils.version import LooseVersion
-from inspect import Parameter
 import logging
-from pathlib import Path
-from sqlite3 import adapters
 import time
-from typing import Dict
-from typing import Iterable
-from typing import List
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
-from typing import Union
-from os.path import exists
+from contextlib import contextmanager
+from dataclasses import is_dataclass
+from pathlib import Path
+from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
 import humanfriendly
 import numpy as np
 import torch
 import torch.nn
 import torch.optim
+from packaging.version import parse as V
 from typeguard import check_argument_types
 
 from espnet2.iterators.abs_iter_factory import AbsIterFactory
 from espnet2.main_funcs.average_nbest_models import average_nbest_models
 from espnet2.main_funcs.calculate_all_attentions import calculate_all_attentions
-from espnet2.schedulers.abs_scheduler import AbsBatchStepScheduler
-from espnet2.schedulers.abs_scheduler import AbsEpochStepScheduler
-from espnet2.schedulers.abs_scheduler import AbsScheduler
-from espnet2.schedulers.abs_scheduler import AbsValEpochStepScheduler
+from espnet2.schedulers.abs_scheduler import (
+    AbsBatchStepScheduler,
+    AbsEpochStepScheduler,
+    AbsScheduler,
+    AbsValEpochStepScheduler,
+)
 from espnet2.torch_utils.add_gradient_noise import add_gradient_noise
 from espnet2.torch_utils.device_funcs import to_device
 from espnet2.torch_utils.recursive_op import recursive_average
 from espnet2.torch_utils.set_all_random_seed import set_all_random_seed
 from espnet2.train.abs_espnet_model import AbsESPnetModel
 from espnet2.train.distributed_utils import DistributedOption
-from espnet2.train.reporter import Reporter
-from espnet2.train.reporter import SubReporter
+from espnet2.train.reporter import Reporter, SubReporter
 from espnet2.utils.build_dataclass import build_dataclass
+from espnet2.utils.kwargs2args import kwargs2args
 
 if torch.distributed.is_available():
     from torch.distributed import ReduceOp
 
-if LooseVersion(torch.__version__) >= LooseVersion("1.6.0"):
-    from torch.cuda.amp import autocast
-    from torch.cuda.amp import GradScaler
+if V(torch.__version__) >= V("1.6.0"):
+    from torch.cuda.amp import GradScaler, autocast
 else:
     # Nothing to do if torch<1.6.0
     @contextmanager
@@ -138,42 +130,11 @@ class Trainer:
         scaler: Optional[GradScaler],
         ngpu: int = 0,
     ):
-
-        is_adapters = exists(checkpoint / "base_model.pth")
-
-        if is_adapters == True:
-            states = torch.load(
-                checkpoint / "checkpoint.pth",
-                map_location=f"cuda:{torch.cuda.current_device()}"
-                if ngpu > 0
-                else "cpu",
-            )
-            output_dir = checkpoint
-
-            base_model = torch.load(
-                output_dir / "base_model.pth",
-                map_location=f"cuda:{torch.cuda.current_device()}"
-                if ngpu > 0
-                else "cpu",
-            )
-            print("model loaded successfully")
-
-            adapters_param = states["model"]
-            for name in adapters_param:
-                base_model[name] = adapters_param[name]
-
-            model.load_state_dict(base_model)
-            print("adapters successfully loaded")
-        else:
-            states = torch.load(
-                checkpoint / "checkpoint.pth",
-                map_location=f"cuda:{torch.cuda.current_device()}"
-                if ngpu > 0
-                else "cpu",
-            )
-            model.load_state_dict(states["model"])
-            print("model successfully loaded(no adapters detected)")
-
+        states = torch.load(
+            checkpoint,
+            map_location=f"cuda:{torch.cuda.current_device()}" if ngpu > 0 else "cpu",
+        )
+        model.load_state_dict(states["model"])
         reporter.load_state_dict(states["reporter"])
         for optimizer, state in zip(optimizers, states["optimizers"]):
             optimizer.load_state_dict(state)
@@ -217,7 +178,7 @@ class Trainer:
         output_dir = Path(trainer_options.output_dir)
         reporter = Reporter()
         if trainer_options.use_amp:
-            if LooseVersion(torch.__version__) < LooseVersion("1.6.0"):
+            if V(torch.__version__) < V("1.6.0"):
                 raise RuntimeError(
                     "Require torch>=1.6.0 for  Automatic Mixed Precision"
                 )
@@ -234,7 +195,7 @@ class Trainer:
 
         if trainer_options.resume and (output_dir / "checkpoint.pth").exists():
             cls.resume(
-                checkpoint=output_dir,
+                checkpoint=output_dir / "checkpoint.pth",
                 model=model,
                 optimizers=optimizers,
                 schedulers=schedulers,
@@ -252,7 +213,8 @@ class Trainer:
         if distributed_option.distributed:
             if trainer_options.sharded_ddp:
                 dp_model = fairscale.nn.data_parallel.ShardedDataParallel(
-                    module=model, sharded_optimizer=optimizers,
+                    module=model,
+                    sharded_optimizer=optimizers,
                 )
             else:
                 dp_model = torch.nn.parallel.DistributedDataParallel(
@@ -273,7 +235,8 @@ class Trainer:
                 )
         elif distributed_option.ngpu > 1:
             dp_model = torch.nn.parallel.DataParallel(
-                model, device_ids=list(range(distributed_option.ngpu)),
+                model,
+                device_ids=list(range(distributed_option.ngpu)),
             )
         else:
             # NOTE(kamo): DataParallel also should work with ngpu=1,
@@ -372,80 +335,23 @@ class Trainer:
                 if trainer_options.use_wandb:
                     reporter.wandb_log()
 
-                # adapters related
-                new_dict = dict()
-                adapters_inserted = False
-                for name in model.state_dict():
-                    # print(name)
-                    if "adapter" in str(name):
-                        adapters_inserted = True
-                        new_dict[name] = model.state_dict()[name]
-                    elif "frontend" not in str(name):
-                        new_dict[name] = model.state_dict()[name]
+                # 4. Save/Update the checkpoint
+                torch.save(
+                    {
+                        "model": model.state_dict(),
+                        "reporter": reporter.state_dict(),
+                        "optimizers": [o.state_dict() for o in optimizers],
+                        "schedulers": [
+                            s.state_dict() if s is not None else None
+                            for s in schedulers
+                        ],
+                        "scaler": scaler.state_dict() if scaler is not None else None,
+                    },
+                    output_dir / "checkpoint.pth",
+                )
 
-                if adapters_inserted == False:
-                    print("no adapters detected, proceeding to save the entire model")
-
-                    # 4. Save/Update the checkpoint
-                    torch.save(
-                        {
-                            "model": model.state_dict(),
-                            "reporter": reporter.state_dict(),
-                            "optimizers": [o.state_dict() for o in optimizers],
-                            "schedulers": [
-                                s.state_dict() if s is not None else None
-                                for s in schedulers
-                            ],
-                            "scaler": scaler.state_dict()
-                            if scaler is not None
-                            else None,
-                        },
-                        output_dir / "checkpoint.pth",
-                    )
-
-                    # 5. Save and log the model and update the link to the best model
-                    torch.save(model.state_dict(), output_dir / f"{iepoch}epoch.pth")
-
-                else:
-                    if iepoch == 1:
-                        print("saving the base model parameters, the entire model")
-                        torch.save(
-                            {
-                                "model": model.state_dict(),
-                                "reporter": reporter.state_dict(),
-                                "optimizers": [o.state_dict() for o in optimizers],
-                                "schedulers": [
-                                    s.state_dict() if s is not None else None
-                                    for s in schedulers
-                                ],
-                                "scaler": scaler.state_dict()
-                                if scaler is not None
-                                else None,
-                            },
-                            output_dir / "checkpoint.pth",
-                        )
-                        torch.save(model.state_dict(), output_dir / "base_model.pth")
-                    else:
-                        # save main model, would update to point to cache if wanted.
-                        print(
-                            "adapters detected, proceeding to save only adapters parameters"
-                        )
-                        torch.save(
-                            {
-                                "model": new_dict,
-                                "reporter": reporter.state_dict(),
-                                "optimizers": [o.state_dict() for o in optimizers],
-                                "schedulers": [
-                                    s.state_dict() if s is not None else None
-                                    for s in schedulers
-                                ],
-                                "scaler": scaler.state_dict()
-                                if scaler is not None
-                                else None,
-                            },
-                            output_dir / "checkpoint.pth",
-                        )
-                        torch.save(new_dict, output_dir / f"{iepoch}epoch.pth")
+                # 5. Save and log the model and update the link to the best model
+                torch.save(model.state_dict(), output_dir / f"{iepoch}epoch.pth")
 
                 # Creates a sym link latest.pth -> {iepoch}epoch.pth
                 p = output_dir / "latest.pth"
@@ -608,6 +514,37 @@ class Trainer:
                 all_steps_are_invalid = False
                 continue
 
+            if iiter == 1 and summary_writer is not None:
+                if distributed:
+                    _model = getattr(model, "module")
+                else:
+                    _model = model
+                    if _model is not None:
+                        try:
+                            _args = kwargs2args(_model.forward, batch)
+                        except (ValueError, TypeError):
+                            logging.warning(
+                                "inpect.signature() is failed for the model. "
+                                "The graph can't be added for tensorboard."
+                            )
+                        else:
+                            try:
+                                summary_writer.add_graph(
+                                    _model, _args, use_strict_trace=False
+                                )
+                            except Exception:
+                                logging.warning(
+                                    "summary_writer.add_graph() "
+                                    "is failed for the model. "
+                                    "The graph can't be added for tensorboard."
+                                )
+                            del _args
+                    else:
+                        logging.warning(
+                            "model.module is not found (This should be a bug.)"
+                        )
+                del _model
+
             with autocast(scaler is not None):
                 with reporter.measure_time("forward_time"):
                     retval = model(**batch)
@@ -697,7 +634,9 @@ class Trainer:
 
                 # compute the gradient norm to check if it is normal or not
                 grad_norm = torch.nn.utils.clip_grad_norm_(
-                    model.parameters(), max_norm=grad_clip, norm_type=grad_clip_type,
+                    model.parameters(),
+                    max_norm=grad_clip,
+                    norm_type=grad_clip_type,
                 )
                 # PyTorch<=1.4, clip_grad_norm_ returns float value
                 if not isinstance(grad_norm, torch.Tensor):
@@ -767,10 +706,6 @@ class Trainer:
                     reporter.tensorboard_add_scalar(summary_writer, -log_interval)
                 if use_wandb:
                     reporter.wandb_log()
-                print("the weights of the frontend layers are:")
-                print(".........")
-                print(model.frontend.featurizer.weights)
-                print(".........")    
 
         else:
             if distributed:
