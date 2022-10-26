@@ -4,10 +4,10 @@ accum_grad: 2
 max_epoch: 20
 patience: 3
 optim_conf:
-    lr: 0.00027
+    lr: 0.0008
 scheduler: warmuplr
 scheduler_conf:
-    warmup_steps: 40000
+    warmup_steps: 10000
 
 frontend_conf:
  n_fft: 512
