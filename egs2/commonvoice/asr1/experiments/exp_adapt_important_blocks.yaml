@@ -44,6 +44,12 @@ frontend_conf:
 
 freeze_param: ["encoder","decoder","ctc"]
 
+init_param: [
+    "exp/asr_xlsr_300m_adapter_finder_raw_cy_bpe150/valid.acc.ave_10best.pth:encoder:encoder",
+    "exp/asr_xlsr_300m_adapter_finder_raw_cy_bpe150/valid.acc.ave_10best.pth:ctc:ctc",
+]
+
+
 model_conf:
   ctc_weight: 1.0
   lsm_weight: 0.1
