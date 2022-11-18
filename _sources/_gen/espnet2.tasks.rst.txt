@@ -70,6 +70,17 @@ espnet2.tasks.asr
     :show-inheritance:
 
 
+.. _espnet2.tasks.slu:
+
+espnet2.tasks.slu
+-----------------
+
+.. automodule:: espnet2.tasks.slu
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.tasks.enh:
 
 espnet2.tasks.enh
@@ -114,6 +125,17 @@ espnet2.tasks.tts
     :show-inheritance:
 
 
+.. _espnet2.tasks.asr_transducer:
+
+espnet2.tasks.asr_transducer
+----------------------------
+
+.. automodule:: espnet2.tasks.asr_transducer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.tasks.abs_task:
 
 espnet2.tasks.abs_task
@@ -131,6 +153,17 @@ espnet2.tasks.st
 ----------------
 
 .. automodule:: espnet2.tasks.st
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.tasks.svs:
+
+espnet2.tasks.svs
+-----------------
+
+.. automodule:: espnet2.tasks.svs
     :members:
     :undoc-members:
     :show-inheritance:

@@ -48,12 +48,34 @@ espnet2.diar.label_processor
     :show-inheritance:
 
 
+.. _espnet2.diar.separator.__init__:
+
+espnet2.diar.separator.__init__
+-------------------------------
+
+.. automodule:: espnet2.diar.separator.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.diar.separator.tcn_separator_nomask:
 
 espnet2.diar.separator.tcn_separator_nomask
 -------------------------------------------
 
 .. automodule:: espnet2.diar.separator.tcn_separator_nomask
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.diar.layers.__init__:
+
+espnet2.diar.layers.__init__
+----------------------------
+
+.. automodule:: espnet2.diar.layers.__init__
     :members:
     :undoc-members:
     :show-inheritance:

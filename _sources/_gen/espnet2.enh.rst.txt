@@ -169,6 +169,17 @@ espnet2.enh.separator.abs_separator
     :show-inheritance:
 
 
+.. _espnet2.enh.separator.ineube_separator:
+
+espnet2.enh.separator.ineube_separator
+--------------------------------------
+
+.. automodule:: espnet2.enh.separator.ineube_separator
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.enh.separator.fasnet_separator:
 
 espnet2.enh.separator.fasnet_separator
@@ -219,6 +230,17 @@ espnet2.enh.separator.asteroid_models
 -------------------------------------
 
 .. automodule:: espnet2.enh.separator.asteroid_models
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.enh.separator.dptnet_separator:
+
+espnet2.enh.separator.dptnet_separator
+--------------------------------------
+
+.. automodule:: espnet2.enh.separator.dptnet_separator
     :members:
     :undoc-members:
     :show-inheritance:
@@ -301,6 +323,17 @@ espnet2.enh.layers.dnn_beamformer
     :show-inheritance:
 
 
+.. _espnet2.enh.layers.dptnet:
+
+espnet2.enh.layers.dptnet
+-------------------------
+
+.. automodule:: espnet2.enh.layers.dptnet
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.enh.layers.skim:
 
 espnet2.enh.layers.skim
@@ -373,6 +406,17 @@ espnet2.enh.layers.complex_utils
 --------------------------------
 
 .. automodule:: espnet2.enh.layers.complex_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.enh.layers.tcndenseunet:
+
+espnet2.enh.layers.tcndenseunet
+-------------------------------
+
+.. automodule:: espnet2.enh.layers.tcndenseunet
     :members:
     :undoc-members:
     :show-inheritance:
@@ -538,6 +582,17 @@ espnet2.enh.loss.wrappers.__init__
 ----------------------------------
 
 .. automodule:: espnet2.enh.loss.wrappers.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.enh.loss.wrappers.mixit_solver:
+
+espnet2.enh.loss.wrappers.mixit_solver
+--------------------------------------
+
+.. automodule:: espnet2.enh.loss.wrappers.mixit_solver
     :members:
     :undoc-members:
     :show-inheritance:

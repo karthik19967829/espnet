@@ -48,6 +48,17 @@ espnet2.fileio.__init__
     :show-inheritance:
 
 
+.. _espnet2.fileio.xml_scp:
+
+espnet2.fileio.xml_scp
+----------------------
+
+.. automodule:: espnet2.fileio.xml_scp
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.fileio.rand_gen_dataset:
 
 espnet2.fileio.rand_gen_dataset

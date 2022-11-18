@@ -81,34 +81,12 @@ espnet2.asr.specaug.specaug
     :show-inheritance:
 
 
-.. _espnet2.asr.transducer.joint_network:
-
-espnet2.asr.transducer.joint_network
-------------------------------------
-
-.. automodule:: espnet2.asr.transducer.joint_network
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 .. _espnet2.asr.transducer.__init__:
 
 espnet2.asr.transducer.__init__
 -------------------------------
 
 .. automodule:: espnet2.asr.transducer.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-.. _espnet2.asr.transducer.transducer_decoder:
-
-espnet2.asr.transducer.transducer_decoder
------------------------------------------
-
-.. automodule:: espnet2.asr.transducer.transducer_decoder
     :members:
     :undoc-members:
     :show-inheritance:
@@ -136,12 +114,34 @@ espnet2.asr.transducer.beam_search_transducer
     :show-inheritance:
 
 
-.. _espnet2.asr.transducer.utils:
+.. _espnet2.asr.layers.__init__:
 
-espnet2.asr.transducer.utils
-----------------------------
+espnet2.asr.layers.__init__
+---------------------------
 
-.. automodule:: espnet2.asr.transducer.utils
+.. automodule:: espnet2.asr.layers.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.asr.layers.fastformer:
+
+espnet2.asr.layers.fastformer
+-----------------------------
+
+.. automodule:: espnet2.asr.layers.fastformer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.asr.layers.cgmlp:
+
+espnet2.asr.layers.cgmlp
+------------------------
+
+.. automodule:: espnet2.asr.layers.cgmlp
     :members:
     :undoc-members:
     :show-inheritance:
@@ -219,6 +219,17 @@ espnet2.asr.postencoder.hugging_face_transformers_postencoder
 -------------------------------------------------------------
 
 .. automodule:: espnet2.asr.postencoder.hugging_face_transformers_postencoder
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.asr.encoder.branchformer_encoder:
+
+espnet2.asr.encoder.branchformer_encoder
+----------------------------------------
+
+.. automodule:: espnet2.asr.encoder.branchformer_encoder
     :members:
     :undoc-members:
     :show-inheritance:
@@ -411,39 +422,6 @@ espnet2.asr.frontend.abs_frontend
     :show-inheritance:
 
 
-.. _espnet2.asr.frontend.adapter_utils.add_adapters:
-
-espnet2.asr.frontend.adapter_utils.add_adapters
------------------------------------------------
-
-.. automodule:: espnet2.asr.frontend.adapter_utils.add_adapters
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-.. _espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer:
-
-espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer
----------------------------------------------------------------
-
-.. automodule:: espnet2.asr.frontend.adapter_utils.adapters.adapter_transformer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-.. _espnet2.asr.frontend.adapter_utils.adapters.adapter:
-
-espnet2.asr.frontend.adapter_utils.adapters.adapter
----------------------------------------------------
-
-.. automodule:: espnet2.asr.frontend.adapter_utils.adapters.adapter
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 .. _espnet2.asr.decoder.rnn_decoder:
 
 espnet2.asr.decoder.rnn_decoder
@@ -466,6 +444,17 @@ espnet2.asr.decoder.__init__
     :show-inheritance:
 
 
+.. _espnet2.asr.decoder.transducer_decoder:
+
+espnet2.asr.decoder.transducer_decoder
+--------------------------------------
+
+.. automodule:: espnet2.asr.decoder.transducer_decoder
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.asr.decoder.transformer_decoder:
 
 espnet2.asr.decoder.transformer_decoder
@@ -483,6 +472,17 @@ espnet2.asr.decoder.mlm_decoder
 -------------------------------
 
 .. automodule:: espnet2.asr.decoder.mlm_decoder
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.asr.decoder.hugging_face_transformers_decoder:
+
+espnet2.asr.decoder.hugging_face_transformers_decoder
+-----------------------------------------------------
+
+.. automodule:: espnet2.asr.decoder.hugging_face_transformers_decoder
     :members:
     :undoc-members:
     :show-inheritance:

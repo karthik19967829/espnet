@@ -15,6 +15,17 @@ espnet2.bin.asr_inference_maskctc
     :show-inheritance:
 
 
+.. _espnet2.bin.asr_transducer_inference:
+
+espnet2.bin.asr_transducer_inference
+------------------------------------
+
+.. automodule:: espnet2.bin.asr_transducer_inference
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.bin.asr_inference_streaming:
 
 espnet2.bin.asr_inference_streaming
@@ -32,6 +43,17 @@ espnet2.bin.__init__
 --------------------
 
 .. automodule:: espnet2.bin.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.bin.slu_inference:
+
+espnet2.bin.slu_inference
+-------------------------
+
+.. automodule:: espnet2.bin.slu_inference
     :members:
     :undoc-members:
     :show-inheritance:
@@ -87,6 +109,28 @@ espnet2.bin.enh_train
 ---------------------
 
 .. automodule:: espnet2.bin.enh_train
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.bin.asr_transducer_train:
+
+espnet2.bin.asr_transducer_train
+--------------------------------
+
+.. automodule:: espnet2.bin.asr_transducer_train
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.bin.svs_inference:
+
+espnet2.bin.svs_inference
+-------------------------
+
+.. automodule:: espnet2.bin.svs_inference
     :members:
     :undoc-members:
     :show-inheritance:
@@ -213,6 +257,17 @@ espnet2.bin.st_train
     :show-inheritance:
 
 
+.. _espnet2.bin.svs_train:
+
+espnet2.bin.svs_train
+---------------------
+
+.. automodule:: espnet2.bin.svs_train
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 .. _espnet2.bin.st_inference_streaming:
 
 espnet2.bin.st_inference_streaming
@@ -285,6 +340,28 @@ espnet2.bin.asr_train
 ---------------------
 
 .. automodule:: espnet2.bin.asr_train
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.bin.hugging_face_export_vocabulary:
+
+espnet2.bin.hugging_face_export_vocabulary
+------------------------------------------
+
+.. automodule:: espnet2.bin.hugging_face_export_vocabulary
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+.. _espnet2.bin.slu_train:
+
+espnet2.bin.slu_train
+---------------------
+
+.. automodule:: espnet2.bin.slu_train
     :members:
     :undoc-members:
     :show-inheritance:
