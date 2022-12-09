@@ -311,7 +311,7 @@
 <span class="sd">            x_input (Union[Tuple, torch.Tensor]): Input tensor w/ or w/o pos emb.</span>
 <span class="sd">                - w/ pos emb: Tuple of tensors [(#batch, time, size), (1, time, size)].</span>
 <span class="sd">                - w/o pos emb: Tensor (#batch, time, size).</span>
-<span class="sd">            mask (torch.Tensor): Mask tensor for the input (#batch, time).</span>
+<span class="sd">            mask (torch.Tensor): Mask tensor for the input (#batch, 1, time).</span>
 <span class="sd">            cache (torch.Tensor): Cache tensor of the input (#batch, time - 1, size).</span>
 
 <span class="sd">        Returns:</span>
