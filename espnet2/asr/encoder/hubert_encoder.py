@@ -23,6 +23,7 @@ from typeguard import check_argument_types
 from espnet2.asr.encoder.abs_encoder import AbsEncoder
 from espnet.nets.pytorch_backend.nets_utils import make_pad_mask
 from espnet.nets.pytorch_backend.transformer.layer_norm import LayerNorm
+from espnet2.asr.frontend.adapter_utils.add_adapters import add_adapters
 
 
 class TorchAudioHuBERTPretrainEncoder(AbsEncoder):
@@ -177,7 +178,11 @@ class TorchAudioHuBERTPretrainEncoder(AbsEncoder):
             feature_grad_mult=feature_grad_mult,
         )
         self.pretrained_params = copy.deepcopy(self.hubert_pretrain_model.state_dict())
-
+        self.hubert_pretrain_model.wav2vec2 = add_adapters(
+                    self.hubert_pretrain_model.wav2vec2,
+                    adapter_down_dim=192,
+                    adapt_layers=[9,10,11],
+                ) 
         self.finetuning = finetuning
         if finetuning:
             for p in self.hubert_pretrain_model.wav2vec2.feature_extractor.parameters():
