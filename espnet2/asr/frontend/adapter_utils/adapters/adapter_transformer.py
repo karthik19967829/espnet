@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-
 from espnet2.asr.frontend.adapter_utils.adapters.adapter import Adapter
 
 # code credit: TransformerSentenceEncoderLayer is adapted from fairseq https://github.com/facebookresearch/fairseq
@@ -31,8 +30,8 @@ class TransformerSentenceEncoderLayer(nn.Module):
         self.activation_dropout = activation_dropout
 
         # Initialize blocks
-        self.activation_fn = utils.get_activation_fn(activation_fn)
-        self.self_attn = MultiheadAttention(
+        self.activation_fn = nn.ReLU()
+        self.self_attn = nn.MultiheadAttention(
             self.embedding_dim,
             num_attention_heads,
             dropout=attention_dropout,
@@ -46,12 +45,12 @@ class TransformerSentenceEncoderLayer(nn.Module):
         self.layer_norm_first = layer_norm_first
 
         # layer norm associated with the self attention layer
-        self.self_attn_layer_norm = LayerNorm(self.embedding_dim)
+        self.self_attn_layer_norm = nn.LayerNorm(self.embedding_dim)
         self.fc1 = nn.Linear(self.embedding_dim, ffn_embedding_dim)
         self.fc2 = nn.Linear(ffn_embedding_dim, self.embedding_dim)
 
         # layer norm associated with the position wise feed-forward NN
-        self.final_layer_norm = LayerNorm(self.embedding_dim)
+        self.final_layer_norm = nn.LayerNorm(self.embedding_dim)
 
     def forward(
         self,
